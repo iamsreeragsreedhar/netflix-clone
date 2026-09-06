@@ -4,13 +4,60 @@ A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+# Court Flix 🎬
 
-A few resources to get you started if this is your first Flutter project:
+A Netflix-inspired movie browsing application built with Flutter.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Features
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Trending movies
+- Popular movies
+- Now playing movies
+- Top-rated movies
+- Movie search
+- Coming Soon screen
+- Movie details
+- Pull-to-refresh
+- Shimmer loading states
+- Error handling
+- Bottom navigation
+- Dark Netflix-style UI
+
+## Tech Stack
+
+- Flutter
+- Dart
+- BLoC
+- Clean Architecture
+- Dio
+- GetIt
+- GoRouter
+- Shimmer
+- TMDB API
+
+## Architecture
+
+The application follows Clean Architecture with a feature-based structure.
+
+```text
+lib/
+├── core/
+│   ├── network/
+│   ├── repository/
+│   ├── shared_widget/
+│   └── ...
+│
+├── feature/
+│   ├── home/
+│   │   ├── data/
+│   │   ├── domain/
+│   │   └── presentation/
+│   │
+│   ├── search/
+│   │   ├── data/
+│   │   ├── domain/
+│   │   └── presentation/
+│   │
+│   └── ...
+│
+└── main.dart
