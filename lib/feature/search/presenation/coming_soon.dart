@@ -23,102 +23,79 @@ class _ComingSoonState extends State<ComingSoon> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: CommonBottomNavBar(
-        currentIndex: 2,
-        onTap: (index) {
-          print(index);
-          switch (index) {
-            case 0:
-              context.go('/home');
-            case 1:
-              context.go('/search');
-            case 2:
-              context.go('/coming-soon');
-            case 3:
-              context.go('/downloads');
-            case 4:
-              context.go('/more');
-
-              break;
-            default:
-          }
-        },
-      ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          context.read<TopsearchBloc>().add(GetComingSoonEvent());
-        },
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                Row(
-                  spacing: 10,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.red,
-                        border: Border(bottom: BorderSide(color: Colors.grey.shade800, width: 1)),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Icon(Icons.notifications, color: Colors.white, size: 25),
-                      ),
+    return RefreshIndicator(
+      onRefresh: () async {
+        context.read<TopsearchBloc>().add(GetComingSoonEvent());
+      },
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              Row(
+                spacing: 10,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.red,
+                      border: Border(bottom: BorderSide(color: Colors.grey.shade800, width: 1)),
                     ),
-
-                    Text(
-                      "Notifications",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Icon(Icons.notifications, color: Colors.white, size: 25),
                     ),
-                  ],
-                ),
-
-                Expanded(
-                  child: BlocConsumer<TopsearchBloc, TopsearchState>(
-                    listener: (context, state) {
-                      debugPrint('STATUS: ${state.status}');
-                      debugPrint('MESSAGE: ${state.msg}');
-                      if (state.status == topSerachstatus.failure) {
-                        AppSnackbar.error(context, state.msg);
-                      }
-                      if (state.status == topSerachstatus.success && state.msg.isNotEmpty) {
-                        AppSnackbar.success(context, state.msg);
-                      }
-                    },
-                    builder: (context, state) {
-                      return (state.status == topSerachstatus.loading)
-                          ? ComingSoonCardSkeleton()
-                          : ListView.builder(
-                              // shrinkWrap: true,
-                              itemCount: state.comingSoonResults.isNotEmpty
-                                  ? state.comingSoonResults.length
-                                  : 0,
-                              itemBuilder: (context, index) {
-                                return ComingSoonCard(
-                                  seasonText: "Season 1",
-                                  title: state.comingSoonResults[index].title,
-                                  description: state.comingSoonResults[index].overview,
-                                  imageUrl: state.comingSoonResults[index].posterPath!,
-                                  genres: state.comingSoonResults[index].genreIds
-                                      .map((id) => id.toString())
-                                      .toList(),
-                                  onRemind: () {},
-                                  onShare: () {},
-                                );
-                              },
-                            );
-                    },
                   ),
+
+                  Text(
+                    "Notifications",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+
+              Expanded(
+                child: BlocConsumer<TopsearchBloc, TopsearchState>(
+                  listener: (context, state) {
+                    debugPrint('STATUS: ${state.status}');
+                    debugPrint('MESSAGE: ${state.msg}');
+                    if (state.status == topSerachstatus.failure) {
+                      AppSnackbar.error(context, state.msg);
+                    }
+                    if (state.status == topSerachstatus.success && state.msg.isNotEmpty) {
+                      AppSnackbar.success(context, state.msg);
+                    }
+                  },
+                  builder: (context, state) {
+                    return (state.status == topSerachstatus.loading)
+                        ? ComingSoonCardSkeleton()
+                        : ListView.builder(
+                            // shrinkWrap: true,
+                            itemCount: state.comingSoonResults.isNotEmpty
+                                ? state.comingSoonResults.length
+                                : 0,
+                            itemBuilder: (context, index) {
+                              return ComingSoonCard(
+                                seasonText: "Season 1",
+                                title: state.comingSoonResults[index].title,
+                                description: state.comingSoonResults[index].overview,
+                                imageUrl: state.comingSoonResults[index].posterPath!,
+                                genres: state.comingSoonResults[index].genreIds
+                                    .map((id) => id.toString())
+                                    .toList(),
+                                onRemind: () {},
+                                onShare: () {},
+                              );
+                            },
+                          );
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

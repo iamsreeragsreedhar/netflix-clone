@@ -13,37 +13,19 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: CommonBottomNavBar(
-        currentIndex: 1,
-        onTap: (index) {
-          print(index);
-          switch (index) {
-            case 0:
-              context.go('/home');
-            case 1:
-              context.go('/search');
-            case 2:
-              context.go('/coming-soon');
-            case 3:
-              context.go('/downloads');
-
-              break;
-            default:
-          }
-        },
-      ),
-      body: BlocConsumer<TopsearchBloc, TopsearchState>(
-        listener: (context, state) {
-          if (state.status == topSerachstatus.failure) {
-            AppSnackbar.error(context, state.msg);
-          }
-          if (state.status == topSerachstatus.success && state.msg.isNotEmpty) {
-            AppSnackbar.success(context, state.msg);
-          }
-        },
-        builder: (context, state) {
-          return SafeArea(
+    return BlocConsumer<TopsearchBloc, TopsearchState>(
+      listener: (context, state) {
+        if (state.status == topSerachstatus.failure) {
+          AppSnackbar.error(context, state.msg);
+        }
+        if (state.status == topSerachstatus.success && state.msg.isNotEmpty) {
+          AppSnackbar.success(context, state.msg);
+        }
+      },
+      builder: (context, state) {
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -84,9 +66,9 @@ class SearchScreen extends StatelessWidget {
                 ),
               ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
